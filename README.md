@@ -67,4 +67,12 @@ Proyek ini dilisensikan di bawah Lisensi MIT. Lihat file LISENSI untuk detailnya
 
 Ucapan Terima Kasih
 
+- OpenCV
+  
+- scikit-learn
+  
+- NumPy
+  
+- Matplotlib
+
 by : ririn nofrima
