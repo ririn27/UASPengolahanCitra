@@ -1,6 +1,6 @@
-# Digital Image Segmentation Using KNN Algorithm
+# Digital Image Segmentation Using KNN Algorithm dan KMeans Algorithm 
 
-Proyek ini mendemonstrasikan segmentasi citra digital menggunakan algoritma K-Nearest Neighbors (KNN). Proses segmentasi membagi gambar menjadi wilayah berbeda berdasarkan kesamaan warna, sehingga memungkinkan identifikasi objek atau area berbeda di dalam gambar.
+Proyek ini mendemonstrasikan segmentasi citra digital menggunakan algoritma K-Nearest Neighbors (KNN) Dan K- means . Proses segmentasi membagi gambar menjadi wilayah berbeda berdasarkan kesamaan warna, sehingga memungkinkan identifikasi objek atau area berbeda di dalam gambar.
 
 ## Ulasan Proyek
 
