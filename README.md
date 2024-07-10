@@ -59,6 +59,11 @@ Proyek ini mendemonstrasikan metode segmentasi gambar yang sederhana namun efekt
 # Lisensi
 
 Proyek ini dilisensikan di bawah Lisensi MIT. Lihat file LISENSI untuk detailnya.
+## Gambar Asli
+
+
+![image](https://github.com/ririn27/UASPengolahanCitra/assets/115934294/7fca5e6e-2a7f-4ea9-bda5-e658cfd82d1e)
+
 
 ## Hasil 
 
