@@ -1,53 +1,49 @@
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import cv2
 from sklearn.neighbors import KNeighborsClassifier
 
-# Membaca gambar
-image = cv2.imread('image.jpg')  # Ganti 'image.jpg dengan path gambar Anda
-image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Mengubah warna gambar dari BGR ke RGB
+# Membaca gambar dari file
+image = cv2.imread('image.jpg')  # Ganti dengan path ke file gambar Anda
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Konversi BGR ke RGB
 
-# Mengubah gambar menjadi array 2D
-pixels = image.reshape(-1, 3)  # Mengubah gambar menjadi bentuk (jumlah piksel, 3) untuk RGB
-
-# Menentukan jumlah cluster
-k = 3  # Jumlah cluster yang ingin dicari
-
-# Membuat model KNN
-knn = KNeighborsClassifier(n_neighbors=1)
-
-# Menetapkan titik data secara acak ke salah satu dari k cluster
-np.random.seed(0)
-random_indices = np.random.choice(len(pixels), size=k, replace=False)
-centers = pixels[random_indices]
-
-# Menginisialisasi variabel
-prev_centers = np.zeros(centers.shape)
-max_iterations = 10  # Jumlah iterasi maksimum
-iteration = 0
-converged = False
-
-while not converged and iteration < max_iterations:
-    # Menghitung jarak titik data dari pusat cluster
-    distances = np.linalg.norm(pixels[:, np.newaxis] - centers, axis=2)
-    
-    # Menetapkan titik data ke cluster terdekat
-    labels = np.argmin(distances, axis=1)
-    
-    # Menghitung pusat cluster baru
-    new_centers = np.array([pixels[labels == i].mean(axis=0) for i in range(k)])
-    
-    # Memeriksa konvergensi
-    if np.all(centers == new_centers):
-        converged = True
-    
-    centers = new_centers
-    iteration += 1
-
-# Mengubah label menjadi gambar segmentasi
-segmentation_image = np.reshape(labels, image.shape[:2])
-
-# Menampilkan gambar segmentasi
-plt.imshow(segmentation_image, cmap='viridis')
-plt.title('Segmentasi Gambar')
+# Menampilkan gambar asli
+plt.figure(figsize=(8, 8))
+plt.imshow(image)
+plt.title('Gambar Asli')
 plt.show()
+
+
+# Mengubah gambar menjadi bentuk 2D
+pixel_values = image.reshape((-1, 3))
+pixel_values = np.float32(pixel_values)
+
+# Membuat label untuk KNN (misalnya, kita gunakan label manual untuk latihan)
+# Pada praktiknya, Anda akan memiliki data label untuk segmentasi
+labels = np.zeros((pixel_values.shape[0],), dtype=int)
+
+# Misal kita labeli beberapa pixel secara manual untuk KNN
+# Label 1 untuk latar belakang, 2 untuk objek yang ingin disegmentasi
+# Contoh data latih (manual untuk contoh)
+labels[1000:2000] = 1  # beberapa piksel untuk latar belakang
+labels[5000:6000] = 2  # beberapa piksel untuk objek
+
+# Melatih model KNN
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(pixel_values, labels)
+
+# Prediksi label untuk setiap piksel dalam gambar
+segmented_labels = knn.predict(pixel_values)
+
+# Mengubah label hasil segmentasi ke bentuk gambar
+segmented_image = segmented_labels.reshape(image.shape[0], image.shape[1])
+
+# Menampilkan gambar hasil segmentasi
+plt.figure(figsize=(8, 8))
+plt.imshow(segmented_image, cmap='viridis')
+plt.title('Gambar Hasil Segmentasi')
+plt.show()
+
+
+# Menyimpan gambar hasil segmentasi
+cv2.imwrite('segmented_image_knn.jpg', segmented_image)
